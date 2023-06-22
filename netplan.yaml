@@ -4,7 +4,7 @@ network:
   ethernets:
     ens160:
       addresses:
-      - 10.127.5.100
+      - 10.127.5.100/24
       routes:
       - to: default
         via: 10.127.5.1

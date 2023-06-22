@@ -7,6 +7,7 @@
 # ADDRESS="10.127.5.101/24"
 
 if [ $# -ne 1 ]; then
+    echo "Apply netplan based on hostname namd supplied vlanid, indexed through vlans.txt"
     echo "Usage: $0 VLANID (with leading zeros)"
     exit
 fi
@@ -28,14 +29,12 @@ else
     HOST_FIELD=4
 fi
 
-VLAN=$(grep "^1275," vlan.txt)
 GATEWAY=$(echo $VLAN | cut -d, -f 2)
 ADDRESS=$(echo $VLAN | cut -d, -f $HOST_FIELD)
 
 echo $(hostname):$ADDRESS, gw:$GATEWAY
 
 sed -e "s|ADDRESS|${ADDRESS}|" -e "s|GATEWAY|$GATEWAY|" netplan-template.yaml > netplan.yaml
-
 
 sudo cp netplan.yaml /etc/netplan/00-installer-config.yaml
 sudo netplan apply
