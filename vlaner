@@ -7,8 +7,8 @@
 # ADDRESS="10.127.5.101/24"
 
 if [ $# -ne 1 ]; then
-    echo "Apply netplan based on hostname namd supplied vlanid, indexed through vlans.txt"
-    echo "Usage: $0 VLANID (with leading zeros)"
+    echo "Apply netplan based on hostname and supplied vlanid, indexed through vlans.txt"
+    echo "Usage:" $(basename $0) "VLANID (don't forget leading zeros)"
     exit
 fi
 
