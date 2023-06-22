@@ -1,0 +1,43 @@
+#!/bin/bash
+
+# read text with vlan/ip/gw
+# hostnamectl set-hostname vlan-test-a
+
+#
+# usage: vlan <VLANID-with Leading Zeros>
+
+# GATEWAY="10.127.5.1"
+# ADDRESS="10.127.5.101/24"
+
+if [ $# -ne 1 ]; then
+    echo "Usage: $0 VLANID (with leading zeros)"
+    exit
+fi
+
+VLANID=$1
+
+VLAN=$(grep "^$VLANID," vlan.txt)
+
+if [ -z $VLAN ]; then
+    echo unknown VLANID: $VLANID
+    exit
+fi
+
+
+if [ $(hostname) = "vlan-test-a" ]; then
+    HOST_FIELD=3
+else
+    HOST_FIELD=4
+fi
+
+VLAN=$(grep "^1275," vlan.txt)
+GATEWAY=$(echo $VLAN | cut -d, -f 2)
+ADDRESS=$(echo $VLAN | cut -d, -f $HOST_FIELD)
+
+echo $(hostname):$ADDRESS, gw:$GATEWAY
+
+sed -e "s|ADDRESS|${ADDRESS}|" -e "s|GATEWAY|$GATEWAY|" netplan-template.yaml > netplan.yaml
+
+
+sudo cp netplan.yaml /etc/netplan/00-installer-config.yaml
+sudo netplan apply
