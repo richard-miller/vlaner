@@ -3,9 +3,6 @@
 # read text with vlan/ip/gw
 # hostnamectl set-hostname vlan-test-a
 
-#
-# usage: vlan <VLANID-with Leading Zeros>
-
 # GATEWAY="10.127.5.1"
 # ADDRESS="10.127.5.101/24"
 
@@ -14,9 +11,10 @@ if [ $# -ne 1 ]; then
     exit
 fi
 
-VLANID=$1
+cd ~bogo/vlaner
 
-VLAN=$(grep "^$VLANID," vlan.txt)
+VLANID=$1
+VLAN=$(grep "^$VLANID," vlans.txt)
 
 if [ -z $VLAN ]; then
     echo unknown VLANID: $VLANID
