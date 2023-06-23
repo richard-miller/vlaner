@@ -3,7 +3,8 @@
 while true; do
 
   gateway=$(ip route | awk '/default/ {print $3}')
-  ping -c 1 $gateway | head -2  | tail -1
-  sleep 1
+  echo -n `date +"%Y%m%d %H:%M:%S"` "- "
+  ping -c 1 $gateway | head -2  | tail -1 | sed -e 's/^.*from //' | sed -e 's/:.* time/ time/'
+  sleep 2
 
 done
