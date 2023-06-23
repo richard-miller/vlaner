@@ -16,7 +16,7 @@ while true; do
   MYIP=$(ip -o -4 addr show dev ens160 | awk '{split($4,a,"/"); print a[1]}')
   
   VLAN=$(grep "${MYIP}/" vlans.txt)
-  ADDRESS=$(echo $VLAN | cut -d, -f $HOST_FIELD | sed 's|/.*||')
+  ADDRESS=$(echo $VLAN | cut -d ' ' -f $HOST_FIELD | sed 's|/.*||')
   
   ping -c 1 $ADDRESS | head -2  | tail -1
   sleep 1

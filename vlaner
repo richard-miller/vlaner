@@ -15,13 +15,12 @@ fi
 cd ~bogo/vlaner
 
 VLANID=$1
-VLAN=$(grep "^$VLANID," vlans.txt)
+VLAN=$(grep "^$VLANID	" vlans.txt)
 
-if [ -z $VLAN ]; then
+if [ -z "${VLAN}" ]; then
     echo unknown VLANID: $VLANID
     exit
 fi
-
 
 if [ $(hostname) = "vlan-test-a" ]; then
     HOST_FIELD=3
@@ -29,8 +28,8 @@ else
     HOST_FIELD=4
 fi
 
-GATEWAY=$(echo $VLAN | cut -d, -f 2)
-ADDRESS=$(echo $VLAN | cut -d, -f $HOST_FIELD)
+GATEWAY=$(echo $VLAN | cut -d ' ' -f 2)
+ADDRESS=$(echo $VLAN | cut -d ' ' -f $HOST_FIELD)
 
 echo $(hostname):$ADDRESS, gw:$GATEWAY
 
