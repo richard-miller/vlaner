@@ -4,10 +4,10 @@ network:
   ethernets:
     ens160:
       addresses:
-      - 10.127.5.100/24
+      - 10.250.7.128/25
       routes:
       - to: default
-        via: 10.127.5.1
+        via: 10.250.7.129
       nameservers:
         addresses:
         - 137.111.226.226

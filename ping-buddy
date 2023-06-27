@@ -18,7 +18,7 @@ while true; do
   VLAN=$(grep "${MYIP}/" vlans.txt)
   ADDRESS=$(echo $VLAN | cut -d ' ' -f $HOST_FIELD | sed 's|/.*||')
   
-  echo -n `date +"%H:%M:%S"` "- "
+  echo -n "buddy:" `date +"%H:%M:%S"` "- "
   ping -c 1 $ADDRESS | head -2  | tail -1| sed -e 's/^.*from //' | sed -e 's/:.* time/ time/'
   sleep 1
 
